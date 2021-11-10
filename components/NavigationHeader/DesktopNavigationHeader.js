@@ -50,7 +50,9 @@ const DesktopNavigationHeader = ({ color, router, ...props }) => {
             <Fragment key={page.href}>
               <Link href={page.href} passHref>
                 <a
-                  className={`${styles.nav__element} ${isActive && styles['nav__element--active']}`}
+                  className={`${styles.nav__element} ${
+                    isActive ? styles['nav__element--active'] : ''
+                  }`}
                 >
                   {page.title}
                 </a>

@@ -16,23 +16,22 @@
 
 @screen md {
   .nav {
-    @apply fixed flex justify-end items-center top-0 w-full pr-12 z-10;
+    @apply fixed flex justify-end items-center top-0 w-full pr-12 z-10 m-0;
 
     transition-duration: 200ms;
-    transition-property: background-color color;
+    transition-property: background-color, color;
   }
 
   .nav__element {
-    @apply no-underline cursor-pointer border-b-2 border-solid border-transparent;
+    @apply no-underline cursor-pointer border-b-2 border-solid border-transparent w-auto;
 
     flex: 0 0 auto;
-    line-height: 3.5rem;
     cursor: pointer;
     color: inherit;
   }
 
   .nav__element--active {
-    @apply font-bold border-red-500;
+    @apply font-bold border-primary;
   }
 }
 

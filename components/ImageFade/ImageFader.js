@@ -6,7 +6,6 @@ import styles from './styles.module.css';
 
 const ImageFader = ({ images, isMobileDevice }) => {
   const [state, dispatch] = useReducer(visibleImagesReducer, getDefaultState(images));
-  console.log(state);
   const transitions = useTransition(state.visibleImages[0], (item) => (item || { src: '' }).src, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
