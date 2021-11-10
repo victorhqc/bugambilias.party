@@ -1,0 +1,13 @@
+.wrapper {
+  @apply w-1/2 p-3;
+}
+
+@screen md {
+  .wrapper {
+    @apply w-1/4 p-4;
+  }
+}
+
+.flex__wrapper {
+  @apply flex flex-wrap text-center;
+}

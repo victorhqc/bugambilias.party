@@ -1,0 +1,62 @@
+.img {
+  @apply fixed left-9;
+}
+
+.nav {
+  @apply m-3;
+}
+
+.nav__element {
+  @apply block w-full py-4 px-0 border-b border-solid border-red-300 no-underline;
+}
+
+.nav__element--active {
+  @apply font-bold;
+}
+
+@screen md {
+  .nav {
+    @apply fixed flex justify-end items-center top-0 w-full pr-12 z-10;
+
+    transition-duration: 200ms;
+    transition-property: background-color color;
+  }
+
+  .nav__element {
+    @apply no-underline cursor-pointer border-b-2 border-solid border-transparent;
+
+    flex: 0 0 auto;
+    line-height: 3.5rem;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  .nav__element--active {
+    @apply font-bold border-red-500;
+  }
+}
+
+.button {
+  @apply border-none bg-none m-0 p-0;
+}
+
+.octicon {
+  @apply py-0 px-3;
+}
+
+.separator {
+  @apply opacity-30 w-1 h-1 my-0 mx-4;
+
+  flex: 0 0 auto;
+  background-color: currentColor;
+  color: inherit;
+  border-radius: 50%;
+}
+
+.header {
+  @apply m-5;
+}
+
+.header__content {
+  @apply flex justify-between;
+}

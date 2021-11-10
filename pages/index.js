@@ -1,27 +1,14 @@
 import React, { Fragment } from 'react';
-import { styled, Typography, Box } from '@smooth-ui/core-sc';
-import { NextSeo, LocalBusinessJsonLd } from 'next-seo';
+// import { NextSeo, LocalBusinessJsonLd } from 'next-seo';
 
 import { Content, Footer, NavigationHeader, ImageFade, PageWrapper } from '../components';
+import styles from './index.module.css';
 
 const PREMISES_PICTURE = '/premises/mobile/premises_1.jpg';
 const WEDDING_INDEX_PICTURE = '/wedding/mobile/wedding_1.jpg';
 const WEDDING_PICTURE = '/wedding/mobile/wedding_4.jpg';
 const PREMISES_ALT = 'Mesas arregladas con mantelería y platos, listas para comenzar la fiesta.';
 const WEDDING_INDEX_PICTURE_ALT = 'Contamos con servicio de bodas';
-
-const Img = styled.div`
-  background-size: cover;
-  background-image: url(${props => props.src});
-  width: 100%;
-  height: 100%;
-`;
-
-const Flex = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
 const SEO_TITLE = 'Salón bugambilias, Fiestas y Eventos Sociales en Querétaro';
 const SEO_DESCRIPTION = `
 Contamos con servicio de Parrilla, Sala lounge, barra de alimentos, luz y sonido, manteleria,
@@ -29,8 +16,8 @@ servicio de cocina, inflables, juegos infantiles y todo para tu fiesta.
 `;
 
 const Index = () => (
-  <Fragment>
-    <NextSeo
+  <>
+    {/* <NextSeo
       config={{
         title: SEO_TITLE,
         description: SEO_DESCRIPTION,
@@ -54,8 +41,8 @@ const Index = () => (
           ],
         },
       }}
-    />
-    <LocalBusinessJsonLd
+    /> */}
+    {/* <LocalBusinessJsonLd
       type="EventVenue"
       id="https://bugambilias.party"
       name="Salón bugambilias"
@@ -74,15 +61,13 @@ const Index = () => (
         longitude: '-100.343215',
       }}
       images={[PREMISES_PICTURE, WEDDING_INDEX_PICTURE, WEDDING_PICTURE]}
-    />
+    /> */}
     <Content>
       <NavigationHeader color="#fff" />
       <ImageFade />
       <PageWrapper>
         <section>
-          <Typography variant="h1" color="primary">
-            Salón bugambilias
-          </Typography>
+          <h1>Salón bugambilias</h1>
           <p>
             En Salón de eventos Bugambilias, te ofrecemos servicios para realizar todo tipo de
             eventos como:
@@ -108,28 +93,31 @@ const Index = () => (
             Con la mejor calidad de servicio y atención personalizada en todo momento por parte de
             nuestro personal altamente capacitado para que tu evento sea de tu total satisfacción.
           </p>
-          <Typography variant="h4" color="primary" mb={{ md: '30px', xs: '15px' }}>
+          <h4>
             Tu experiencia en Salón Bugambilias será inolvidable, dentro de un ambiente maravilloso
             y único.
-          </Typography>
-          <Flex>
-            <Box
-              pr={{ md: '10px' }}
-              pb={{ xs: '10px', md: 0 }}
-              width={{ md: '50%', xs: '100%' }}
-              height={{ md: '400px', xs: '300px' }}
-            >
-              <Img src={PREMISES_PICTURE} alt={PREMISES_ALT} />
-            </Box>
-            <Box width={{ md: '50%', xs: '100%' }} height={{ md: '400px', xs: '300px' }}>
-              <Img src={WEDDING_INDEX_PICTURE} alt={WEDDING_INDEX_PICTURE_ALT} />
-            </Box>
-          </Flex>
+          </h4>
+          <div className={styles.flex__wrapper}>
+            <div className={styles.content}>
+              <img
+                className={styles.img}
+                style={{ backgroundImage: PREMISES_PICTURE }}
+                alt={PREMISES_ALT}
+              />
+            </div>
+            <div className={styles.content}>
+              <img
+                className={styles.img}
+                style={{ backgroundImage: WEDDING_INDEX_PICTURE }}
+                alt={WEDDING_INDEX_PICTURE_ALT}
+              />
+            </div>
+          </div>
         </section>
       </PageWrapper>
     </Content>
     <Footer />
-  </Fragment>
+  </>
 );
 
 export default Index;

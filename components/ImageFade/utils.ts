@@ -1,8 +1,7 @@
 const images = [
   {
     src: 'vista_salon.jpg',
-    alt:
-      'Mesas listas para comenzar la fiesta. Al fondo puede verse la mesa con dulces y la mesa de buffet.',
+    alt: 'Mesas listas para comenzar la fiesta. Al fondo puede verse la mesa con dulces y la mesa de buffet.',
   },
   {
     src: 'mesa_de_dulces.jpg',
@@ -20,14 +19,14 @@ const images = [
     src: 'centro_de_mesa.jpg',
     alt: 'Mesa redonda para 10 personas, con bonito centro de mesa.',
   },
-];
+] as const;
 
-export const DESKTOP_IMAGES = images.map(image => ({
+export const DESKTOP_IMAGES = images.map((image) => ({
   ...image,
   src: `/desktop/${image.src}`,
 }));
 
-export const MOBILE_IMAGES = images.map(image => ({
+export const MOBILE_IMAGES = images.map((image) => ({
   ...image,
   src: `/mobile/${image.src}`,
 }));

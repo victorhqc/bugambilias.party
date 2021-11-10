@@ -6,12 +6,12 @@ const UserAgent = createContext({
 
 export default UserAgent;
 
-export const withUserAgent = WrappedComponent => {
+export const withUserAgent = (WrappedComponent) => {
   return class WithUserAgent extends Component {
     render() {
       return (
         <UserAgent.Consumer>
-          {userAgent => (
+          {({ result: userAgent }) => (
             <WrappedComponent
               {...this.props}
               userAgent={userAgent.get()}

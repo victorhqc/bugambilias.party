@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { Typography } from '@smooth-ui/core-sc';
-import { NextSeo } from 'next-seo';
+// import { NextSeo } from 'next-seo';
 
 import {
   Content,
@@ -16,12 +15,12 @@ import {
 const Four0Four = ({ isMobileDevice }) => {
   return (
     <Fragment>
-      <NextSeo
+      {/* <NextSeo
         config={{
           title: 'Salón bugambilias - 404',
           description: 'Página no encontrada.',
         }}
-      />
+      /> */}
       <Head>
         <title>Salón bugambilias - 404</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -30,9 +29,7 @@ const Four0Four = ({ isMobileDevice }) => {
         <NavigationHeader />
         <NavigationOffset />
         <PageWrapper>
-          <Typography variant="h2" color="primary" m={{ md: '50px 0', xs: '20px 0' }}>
-            404
-          </Typography>
+          <h2>404</h2>
           <p>Página no encontrada.</p>
         </PageWrapper>
       </Content>

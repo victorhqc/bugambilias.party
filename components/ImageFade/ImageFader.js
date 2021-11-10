@@ -1,12 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTransition } from 'react-spring';
+import { animated, useTransition } from 'react-spring';
 import { visibleImagesReducer, getDefaultState, nextImage } from './reducer';
-import { Img, Wrapper } from './styled';
+import styles from './styles.module.css';
 
 const ImageFader = ({ images, isMobileDevice }) => {
   const [state, dispatch] = useReducer(visibleImagesReducer, getDefaultState(images));
-  const transitions = useTransition(state.visibleImages[0], item => item.src, {
+  console.log(state);
+  const transitions = useTransition(state.visibleImages[0], (item) => (item || { src: '' }).src, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
@@ -28,28 +29,37 @@ const ImageFader = ({ images, isMobileDevice }) => {
   }, []);
 
   return (
-    <Wrapper data-testid="image-fader">
-      <Img
+    <div className={styles.wrapper} data-testid="image-fader">
+      <animated.img
+        className={styles.img}
         data-is-mobile={isMobileDevice}
         data-testid="ssr-placeholder"
         {...state.visibleImages[0]}
       />
-      {transitions.map(({ item, props, key }) => (
-        <Img
-          data-is-mobile={isMobileDevice}
-          src={item.src}
-          alt={item.alt}
-          key={key}
-          style={{ ...props }}
-        />
-      ))}
-      <Img
+      {transitions.map(({ item, props, key }) => {
+        if (!item) {
+          return null;
+        }
+
+        return (
+          <animated.img
+            className={styles.img}
+            data-is-mobile={isMobileDevice}
+            src={item.src}
+            alt={item.alt}
+            key={key}
+            style={{ ...props }}
+          />
+        );
+      })}
+      <animated.img
+        className={styles.img}
         data-is-mobile={isMobileDevice}
         data-testid="next-image"
         invisible="true"
         {...state.visibleImages[1]}
       />
-    </Wrapper>
+    </div>
   );
 };
 
@@ -58,7 +68,7 @@ ImageFader.propTypes = {
     PropTypes.shape({
       src: PropTypes.string,
       alt: PropTypes.string,
-    })
+    }),
   ),
   isMobileDevice: PropTypes.bool,
 };

@@ -4,7 +4,6 @@ export { default as NavigationOffset } from './NavigationOffset';
 export { default as Services } from './Services';
 export { default as Content } from './Content';
 export { default as Footer } from './Footer';
-export { default as GlobalStyle } from './GlobalStyle';
 export { default as GoogleMaps } from './GoogleMaps';
 export { default as isInScreen } from './isInScreen';
 export { default as PageWrapper } from './PageWrapper';

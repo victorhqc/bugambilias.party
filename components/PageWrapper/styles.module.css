@@ -1,0 +1,9 @@
+.wrapper {
+  @apply py-3 px-3;
+}
+
+@screen md {
+  .wrapper {
+    @apply py-5 px-5;
+  }
+}

@@ -1,0 +1,17 @@
+.img {
+  @apply bg-cover w-full h-full;
+}
+
+.flex__wrapper {
+  @apply flex flex-wrap;
+}
+
+.content {
+  @apply pb-3 w-full h-80;
+}
+
+@screen md {
+  .content {
+    @apply w-1/2 h-96;
+  }
+}

@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { animated, useSpring, config } from 'react-spring';
-import { th, styled } from '@smooth-ui/core-sc';
-import { withTheme } from 'styled-components';
 import { theme } from '../../utils';
 import { PAGES } from './utils';
-
-const primaryColor = th('primary');
+import styles from './styles.module.css';
 
 const getInitialScrollPosition = () => {
   if (process.browser) {
@@ -23,7 +20,7 @@ const DesktopNavigationHeader = ({ color, router, ...props }) => {
     scrollPosition: getInitialScrollPosition(),
     config: config.stiff,
   }));
-  const menuColor = color || primaryColor(props);
+  const menuColor = color;
 
   // Equivalent to componentDidMount
   useEffect(() => {
@@ -36,21 +33,33 @@ const DesktopNavigationHeader = ({ color, router, ...props }) => {
 
   return (
     <header>
-      <Nav style={calculateNavStyle(springProps, menuColor)}>
+      <animated.nav className={styles.nav} style={calculateNavStyle(springProps, menuColor)}>
         <Link href="/" passHref>
           <a>
-            <Img alt="Salón bugambilias" src="/logo.png" style={calculateImgStyle(springProps)} />
+            <animated.img
+              className={styles.img}
+              alt="Salón bugambilias"
+              src="/logo.png"
+              style={calculateImgStyle(springProps)}
+            />
           </a>
         </Link>
-        {PAGES.map((page, index) => (
-          <Fragment key={page.href}>
-            <Link href={page.href} passHref>
-              <NavElement isActive={page.href === router.route}>{page.title}</NavElement>
-            </Link>
-            {index < PAGES.length - 1 ? <Separator /> : null}
-          </Fragment>
-        ))}
-      </Nav>
+        {PAGES.map((page, index) => {
+          const isActive = page.href === router.route;
+          return (
+            <Fragment key={page.href}>
+              <Link href={page.href} passHref>
+                <a
+                  className={`${styles.nav__element} ${isActive && styles['nav__element--active']}`}
+                >
+                  {page.title}
+                </a>
+              </Link>
+              {index < PAGES.length - 1 ? <span className={styles.separator} /> : null}
+            </Fragment>
+          );
+        })}
+      </animated.nav>
     </header>
   );
 };
@@ -83,7 +92,7 @@ function scrollEventListener({ setSpring }) {
 const TOP_OFFSET = 60;
 
 function calculateNavStyle({ scrollPosition }, defaultColor) {
-  const dynamicBackground = scrollPosition.interpolate(val => {
+  const dynamicBackground = scrollPosition.interpolate((val) => {
     if (val < TOP_OFFSET) {
       return 'transparent';
     }
@@ -91,7 +100,7 @@ function calculateNavStyle({ scrollPosition }, defaultColor) {
     return theme.primary;
   });
 
-  const dynamicColor = scrollPosition.interpolate(val => {
+  const dynamicColor = scrollPosition.interpolate((val) => {
     if (val < TOP_OFFSET) {
       return defaultColor;
     }
@@ -99,7 +108,7 @@ function calculateNavStyle({ scrollPosition }, defaultColor) {
     return '#fff';
   });
 
-  const dynamicBoxShadow = scrollPosition.interpolate(val => {
+  const dynamicBoxShadow = scrollPosition.interpolate((val) => {
     if (val < TOP_OFFSET) {
       return 'none';
     }
@@ -116,7 +125,7 @@ function calculateNavStyle({ scrollPosition }, defaultColor) {
 
 function calculateImgStyle({ scrollPosition }) {
   const imgOffset = 0;
-  const dynamicTransform = scrollPosition.interpolate(val => {
+  const dynamicTransform = scrollPosition.interpolate((val) => {
     if (val < TOP_OFFSET) {
       return `translate3d(0px, ${imgOffset}px, 0px) scale(1)`;
     }
@@ -142,44 +151,4 @@ function calculateImgStyle({ scrollPosition }) {
   };
 }
 
-const Img = styled(animated.img)`
-  position: fixed;
-  left: 35px;
-`;
-
-const Nav = styled(animated.nav)`
-  position: fixed;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  top: 0px;
-  width: 100%;
-  padding-right: 50px;
-  z-index: 10;
-
-  transition-duration: 200ms;
-  transition-property: background-color color;
-`;
-
-const NavElement = styled.a`
-  flex: 0 0 auto;
-  text-decoration: none;
-  line-height: 3.5rem;
-  cursor: pointer;
-  color: inherit;
-  font-weight: ${({ isActive }) => (isActive ? 'bold' : '')};
-  border-bottom: 2px solid ${({ isActive, theme }) => (isActive ? theme.primary : 'transparemt')};
-`;
-
-const Separator = styled.span`
-  flex: 0 0 auto;
-  background-color: currentColor;
-  color: inherit;
-  opacity: 0.35;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  margin: 0 15px;
-`;
-
-export default withRouter(withTheme(DesktopNavigationHeader));
+export default withRouter(DesktopNavigationHeader);

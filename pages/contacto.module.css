@@ -1,0 +1,21 @@
+.content {
+  @apply mb-3;
+}
+
+@screen md {
+  .content {
+    @apply mb-5;
+  }
+}
+
+.link {
+  color: inherit;
+}
+
+.link__wrapper {
+  @apply flex items-center;
+}
+
+.img {
+  @apply mr-5;
+}

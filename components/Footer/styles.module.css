@@ -1,0 +1,13 @@
+.footer {
+  @apply bg-blue-200 flex-shrink-0 p-2;
+}
+
+@screen md {
+  .footer {
+    @apply p-4;
+  }
+}
+
+.footer__link {
+  color: inherit;
+}

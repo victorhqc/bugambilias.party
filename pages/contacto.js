@@ -1,8 +1,7 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { styled, Typography, Box } from '@smooth-ui/core-sc';
-import { NextSeo } from 'next-seo';
+// import { NextSeo } from 'next-seo';
 
 import {
   Content,
@@ -14,19 +13,7 @@ import {
   withUserAgent,
 } from '../components';
 import { event } from '../utils';
-
-const Link = styled.a`
-  color: inherit;
-`;
-
-const LinkWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Img = styled.img`
-  margin-right: 20px;
-`;
+import styles from './contacto.module.css';
 
 const Contacto = ({ isMobileDevice }) => {
   const onWhatsapp = useCallback(() => {
@@ -45,8 +32,8 @@ const Contacto = ({ isMobileDevice }) => {
   }, []);
 
   return (
-    <Fragment>
-      <NextSeo
+    <>
+      {/* <NextSeo
         config={{
           title: 'Salón bugambilias, contáctanos',
           description: `
@@ -56,7 +43,7 @@ israel_bugam@hotmail.com.
 Estamos ubicados en Senda de los recuerdos 119, Milenio III, Querétaro, Qro 776060
 `,
         }}
-      />
+      /> */}
       <Head>
         <title>Salón bugambilias - Contáctanos</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -65,37 +52,46 @@ Estamos ubicados en Senda de los recuerdos 119, Milenio III, Querétaro, Qro 776
         <NavigationHeader />
         <NavigationOffset />
         <PageWrapper>
-          <Typography variant="h2" color="primary" m={{ md: '50px 0', xs: '20px 0' }}>
-            Contáctanos
-          </Typography>
+          <h2>Contáctanos</h2>
           <p>
             Llámanos de lunes a viernes de <i>9:00am a 7:00pm</i> o envíanos un mensaje en Whatsapp
             o correo electrónico.
           </p>
-          <Box mb={{ md: '20px', xs: '10px' }}>
-            <LinkWrapper>
-              <Img src="/icons/whatsapp_logo.svg" alt="Whatsapp Logo" width={60} />
-              <Link href="https://wa.me/5214423138637" onClick={onWhatsapp}>
+          <div className={styles.content}>
+            <div className={styles.link__wrapper}>
+              <img
+                className={styles.img}
+                src="/icons/whatsapp_logo.svg"
+                alt="Whatsapp Logo"
+                width={60}
+              />
+              <a className={styles.link} href="https://wa.me/5214423138637" onClick={onWhatsapp}>
                 442 313 8637
-              </Link>
-            </LinkWrapper>
-          </Box>
-          <Box mb={{ md: '20px', xs: '10px' }}>
-            <LinkWrapper>
-              <Img src="/icons/email.svg" alt="Correo electrónico" width={60} />
-              <Link
+              </a>
+            </div>
+          </div>
+          <div className={styles.content}>
+            <div className={styles.link__wrapper}>
+              <img
+                className={styles.img}
+                src="/icons/email.svg"
+                alt="Correo electrónico"
+                width={60}
+              />
+              <a
+                className={styles.link}
                 href="mailto:israel_bugam@hotmail.com?subject=Pregunta sobre Salón Bugambilias"
                 onClick={onEmail}
               >
                 israel_bugam@hotmail.com
-              </Link>
-            </LinkWrapper>
-          </Box>
+              </a>
+            </div>
+          </div>
           <GoogleMaps />
         </PageWrapper>
       </Content>
       <Footer />
-    </Fragment>
+    </>
   );
 };
 
