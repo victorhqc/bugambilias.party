@@ -6,7 +6,9 @@ import styles from './styles.module.css';
 
 const ImageFader = ({ images, isMobileDevice }) => {
   const [state, dispatch] = useReducer(visibleImagesReducer, getDefaultState(images));
-  const transitions = useTransition(state.visibleImages[0], (item) => (item || { src: '' }).src, {
+  const { visibleImages } = state;
+
+  const transitions = useTransition(visibleImages[0], {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
@@ -35,27 +37,24 @@ const ImageFader = ({ images, isMobileDevice }) => {
         data-testid="ssr-placeholder"
         {...state.visibleImages[0]}
       />
-      {transitions.map(({ item, props, key }) => {
-        if (!item) {
-          return null;
-        }
-
-        return (
-          <animated.img
-            className={styles.img}
-            data-is-mobile={isMobileDevice}
-            src={item.src}
-            alt={item.alt}
-            key={key}
-            style={{ ...props }}
-          />
-        );
-      })}
+      {transitions(({ opacity }, item) => (
+        <animated.img
+          className={styles.img}
+          data-is-mobile={isMobileDevice}
+          src={item.src}
+          alt={item.alt}
+          style={{
+            opacity: opacity.to({
+              range: [0.0, 1.0],
+              output: [0, 1],
+            }),
+          }}
+        />
+      ))}
       <animated.img
-        className={styles.img}
+        className={`${styles.img} ${styles['img--invisible']}`}
         data-is-mobile={isMobileDevice}
         data-testid="next-image"
-        invisible="true"
         {...state.visibleImages[1]}
       />
     </div>
