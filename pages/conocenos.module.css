@@ -1,0 +1,9 @@
+.services {
+  @apply bg-secondary my-0 -mx-5;
+}
+
+@screen md {
+  .services {
+    @apply -mx-12;
+  }
+}

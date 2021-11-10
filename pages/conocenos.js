@@ -1,8 +1,7 @@
 import React, { Fragment, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { styled, Typography, Box, Breakpoint } from '@smooth-ui/core-sc';
-import { NextSeo } from 'next-seo';
+// import { NextSeo } from 'next-seo';
 
 import {
   Content,
@@ -15,13 +14,9 @@ import {
   withUserAgent,
   loadGalleryImages,
 } from '../components';
+import styles from './conocenos.module.css';
 
-const ServicesWrapper = styled.div`
-  background-color: ${({ theme }) => theme.secondary};
-  margin: ${({ size }) => (size === 'big' ? '0 -50px' : '0 -20px')};
-`;
-
-const supportTextMargin = { xs: '50px 0 0 0' };
+// const supportTextMargin = { xs: '50px 0 0 0' };
 
 const Servicios = ({ isMobileDevice }) => {
   const height = isMobileDevice ? '300px' : '600px';
@@ -31,7 +26,7 @@ const Servicios = ({ isMobileDevice }) => {
 
   return (
     <Fragment>
-      <NextSeo
+      {/* <NextSeo
         config={{
           title: 'Salón bugambilias, conócenos!',
           description: `
@@ -48,7 +43,7 @@ Paquetes todo incluido:
 - Rocolas
 `,
         }}
-      />
+      /> */}
       <Head>
         <title>Salón bugambilias - Acerca de</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -58,42 +53,31 @@ Paquetes todo incluido:
         <NavigationOffset />
         <PageWrapper>
           <section>
-            <Typography variant="h2" color="primary" m={{ md: '50px 0', xs: '20px 0' }}>
+            <h2>
               Te ofrecemos nuestros servicios de paquetes
               <br />
               <small>Todo incluido para realizar tu evento.</small>
-            </Typography>
-            <Breakpoint up="md">
-              <ServicesWrapper size="big">
-                <Services />
-              </ServicesWrapper>
-            </Breakpoint>
-            <Breakpoint down="md">
-              <ServicesWrapper>
-                <Services />
-              </ServicesWrapper>
-            </Breakpoint>
+            </h2>
+            <div className={styles.styles}>
+              <Services />
+            </div>
           </section>
           <section>
-            <Typography variant="h2" color="primary" m={supportTextMargin}>
-              Instalaciones
-            </Typography>
-            <Typography as="p" width={{ md: '65%' }}>
+            <h2>Instalaciones</h2>
+            <p>
               Nuestro salón de <b>854 metros cuadrados</b> tiene un cupo máximo para{' '}
               <b>200 personas.</b> Contamos con servicio de meseros profesionales y sistema para DJ.
-            </Typography>
+            </p>
             <Box mt={{ xs: 15, md: 30 }}>
               <ImageGallery images={premisesImages} height={height} nextDelay={2000} />
             </Box>
           </section>
           <section>
-            <Typography variant="h2" color="primary" m={supportTextMargin}>
-              Bodas
-            </Typography>
-            <Typography as="p" width={{ md: '65%' }}>
+            <h2>Bodas</h2>
+            <p>
               Ten tu boda de ensueño y sin preocupaciones. Decoramos el salón con los colores de tu
               preferencia, así como arreglos florales y decorativos.
-            </Typography>
+            </p>
             <Box mt={{ xs: 15, md: 30 }}>
               <ImageGallery images={weddingImages} height={height} nextDelay={1000} />
             </Box>
