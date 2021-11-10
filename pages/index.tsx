@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import Image from 'next/image';
 // import { NextSeo, LocalBusinessJsonLd } from 'next-seo';
 
 import { Content, Footer, NavigationHeader, ImageFade, PageWrapper } from '../components';
@@ -67,12 +68,12 @@ const Index = () => (
       <ImageFade />
       <PageWrapper>
         <section>
-          <h1>Salón bugambilias</h1>
-          <p>
+          <h1 className={styles.title}>Salón bugambilias</h1>
+          <p className={styles.p}>
             En Salón de eventos Bugambilias, te ofrecemos servicios para realizar todo tipo de
             eventos como:
           </p>
-          <ul>
+          <ul className={styles.services}>
             <li>
               <b>Bodas</b>
             </li>
@@ -89,27 +90,31 @@ const Index = () => (
               <b>Eventos empresariales</b>
             </li>
           </ul>
-          <p>
+          <p className={styles.p}>
             Con la mejor calidad de servicio y atención personalizada en todo momento por parte de
             nuestro personal altamente capacitado para que tu evento sea de tu total satisfacción.
           </p>
-          <h4>
+          <h4 className={styles.highlight}>
             Tu experiencia en Salón Bugambilias será inolvidable, dentro de un ambiente maravilloso
             y único.
           </h4>
-          <div className={styles.flex__wrapper}>
+          <div className={styles.content__wrapper}>
             <div className={styles.content}>
-              <img
+              <Image
                 className={styles.img}
-                style={{ backgroundImage: PREMISES_PICTURE }}
+                src={PREMISES_PICTURE}
+                // style={{ backgroundImage: PREMISES_PICTURE }}
                 alt={PREMISES_ALT}
+                layout="fill"
               />
             </div>
             <div className={styles.content}>
-              <img
+              <Image
                 className={styles.img}
-                style={{ backgroundImage: WEDDING_INDEX_PICTURE }}
+                src={WEDDING_INDEX_PICTURE}
+                // style={{ backgroundImage: WEDDING_INDEX_PICTURE }}
                 alt={WEDDING_INDEX_PICTURE_ALT}
+                layout="fill"
               />
             </div>
           </div>

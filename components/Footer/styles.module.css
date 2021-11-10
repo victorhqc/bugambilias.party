@@ -1,13 +1,22 @@
 .footer {
-  @apply bg-blue-200 flex-shrink-0 p-2;
+  @apply bg-secondary flex-shrink-0 p-2;
 }
 
 @screen md {
   .footer {
-    @apply p-4;
+    @apply p-10;
   }
 }
 
 .footer__link {
+  @apply underline;
   color: inherit;
+}
+
+.address {
+  @apply text-sm mb-3;
+}
+
+.p {
+  @apply my-3;
 }

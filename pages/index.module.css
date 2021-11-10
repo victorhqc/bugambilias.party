@@ -1,17 +1,33 @@
+.title {
+  @apply text-4xl text-primary mb-4;
+}
+
+.p {
+  @apply my-2;
+}
+
+.services {
+  @apply list-disc mx-6;
+}
+
+.highlight {
+  @apply text-2xl text-primary mb-4;
+}
+
 .img {
   @apply bg-cover w-full h-full;
 }
 
-.flex__wrapper {
-  @apply flex flex-wrap;
+.content__wrapper {
+  @apply grid grid-cols-2 gap-4;
 }
 
 .content {
-  @apply pb-3 w-full h-80;
+  @apply pb-3 w-full h-80 relative;
 }
 
 @screen md {
   .content {
-    @apply w-1/2 h-96;
+    @apply h-96;
   }
 }
