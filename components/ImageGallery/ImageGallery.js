@@ -6,6 +6,7 @@ import isInScreen from '../isInScreen';
 import { imageGalleryReducer, getDefaultState, nextImage, previousImage } from './reducer';
 import { event } from '../../utils';
 import styles from './styles.module.css';
+import { easeCubicInOut } from 'd3-ease';
 
 const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen }) => {
   const [state, dispatch] = useReducer(imageGalleryReducer, getDefaultState(images));
@@ -60,15 +61,23 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
     };
   }, [mouseStatus, isInScreen]);
 
-  const nextImageTransitions = useTransition(state.images[0], (item) => item.src, {
+  const nextImageTransitions = useTransition(state.images[0], {
     from: { opacity: 0, transform: 'translate3d(100%, 0, 0)' },
     enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
     leave: { opacity: 0, transform: 'translate3d(-50%, 0, 0)' },
+    config: {
+      duration: 500,
+      easing: easeCubicInOut,
+    },
   });
-  const previousImageTransitions = useTransition(state.images[0], (item) => item.src, {
+  const previousImageTransitions = useTransition(state.images[0], {
     from: { opacity: 0, transform: 'translate3d(-100%, 0, 0)' },
     enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
     leave: { opacity: 0, transform: 'translate3d(50%, 0, 0)' },
+    config: {
+      duration: 500,
+      easing: easeCubicInOut,
+    },
   });
 
   return (
@@ -93,19 +102,41 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
       >
         <div className={styles.icon} />
       </button>
-      {state.direction === 'none' && <animated.img className={styles.img} {...state.images[0]} />}
+      {state.direction === 'none' && <img className={styles.img} {...state.images[0]} />}
       {state.direction === 'next' &&
-        nextImageTransitions.map(({ item, key, props }) => (
-          <animated.img className={styles.img} style={props} key={key} {...item} />
+        nextImageTransitions(({ opacity, transform }, item) => (
+          <animated.img
+            className={styles.img}
+            src={item.src}
+            alt={item.alt}
+            style={{
+              opacity: opacity.to({
+                range: [0.0, 1.0],
+                output: [0, 1],
+              }),
+              transform,
+            }}
+          />
         ))}
       {state.direction === 'previous' &&
-        previousImageTransitions.map(({ item, key, props }) => (
-          <animated.img className={styles.img} style={props} key={key} {...item} />
+        previousImageTransitions(({ opacity, transform }, item) => (
+          <animated.img
+            className={styles.img}
+            src={item.src}
+            alt={item.alt}
+            style={{
+              opacity: opacity.to({
+                range: [0.0, 1.0],
+                output: [0, 1],
+              }),
+              transform,
+            }}
+          />
         ))}
       {/* Prefetches the next image */}
-      <animated.img
+      <img
         className={styles.img}
-        invisible="true"
+        style={{ visibility: 'hidden' }}
         {...state.images[1]}
         data-testid="prefetched"
       />

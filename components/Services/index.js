@@ -5,8 +5,8 @@ import styles from './styles.module.css';
 
 const ServiceItem = ({ src, title }) => (
   <div className={styles.wrapper}>
-    <img src={src} width="150px" />
-    <p>{title}</p>
+    <img className={styles.img} src={src} width="150px" />
+    <p className={styles.text}>{title}</p>
   </div>
 );
 

@@ -4,6 +4,6 @@
 
 @screen md {
   .wrapper {
-    @apply py-5 px-5;
+    @apply py-5 px-12;
   }
 }

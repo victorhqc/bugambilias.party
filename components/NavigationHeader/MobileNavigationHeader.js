@@ -34,7 +34,7 @@ const MobileNavigationHeader = ({ router }) => {
     <header className={styles.header}>
       <div className={styles.header__content}>
         <a href="/">
-          <img alt="Salón bugambilias" src="logo.png" height="50" />
+          <img className={styles.logo} alt="Salón bugambilias" src="logo.png" height="50" />
         </a>
         <ToggleButton setStatus={setStatus} />
       </div>

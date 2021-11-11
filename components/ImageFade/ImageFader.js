@@ -31,7 +31,7 @@ const ImageFader = ({ images, isMobileDevice }) => {
 
   return (
     <div className={styles.wrapper} data-testid="image-fader">
-      <animated.img
+      <img
         className={styles.img}
         data-is-mobile={isMobileDevice}
         data-testid="ssr-placeholder"
@@ -51,7 +51,7 @@ const ImageFader = ({ images, isMobileDevice }) => {
           }}
         />
       ))}
-      <animated.img
+      <img
         className={`${styles.img} ${styles['img--invisible']}`}
         data-is-mobile={isMobileDevice}
         data-testid="next-image"

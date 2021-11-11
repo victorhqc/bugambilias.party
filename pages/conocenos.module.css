@@ -1,3 +1,21 @@
+.title {
+  @apply text-3xl text-primary my-5;
+}
+
+.subtitle {
+  @apply text-3xl text-primary my-4;
+}
+
+.main-text {
+  @apply text-lg;
+}
+
+@screen md {
+  .title {
+    @apply my-12;
+  }
+}
+
 .services {
   @apply bg-secondary my-0 -mx-5;
 }
@@ -5,5 +23,15 @@
 @screen md {
   .services {
     @apply -mx-12;
+  }
+}
+
+.gallery__wrapper {
+  @apply my-4;
+}
+
+@screen md {
+  .gallery__wrapper {
+    @apply my-8;
   }
 }

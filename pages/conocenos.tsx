@@ -1,7 +1,10 @@
-import React, { Fragment, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-// import { NextSeo } from 'next-seo';
+import UAParser from 'ua-parser-js';
+import { UserAgent } from '../components';
+import { UserAgentSingleton, isMobileDevice } from '../utils';
+import { NextSeo } from 'next-seo';
 
 import {
   Content,
@@ -11,26 +14,23 @@ import {
   NavigationOffset,
   Services,
   ImageGallery,
-  withUserAgent,
   loadGalleryImages,
 } from '../components';
 import styles from './conocenos.module.css';
 
-// const supportTextMargin = { xs: '50px 0 0 0' };
+const Servicios: NextPage<Props> = ({ deviceType }) => {
+  const userAgent = useMemo(() => new UserAgentSingleton(deviceType), []);
 
-const Servicios = ({ isMobileDevice }) => {
-  const height = isMobileDevice ? '300px' : '600px';
-  const imagesType = isMobileDevice ? 'mobile' : 'desktop';
+  const height = isMobileDevice(deviceType) ? '300px' : '600px';
+  const imagesType = isMobileDevice(deviceType) ? 'mobile' : 'desktop';
   const weddingImages = useMemo(() => loadGalleryImages('wedding', imagesType), []);
   const premisesImages = useMemo(() => loadGalleryImages('premises', imagesType), []);
 
   return (
-    <Fragment>
-      {/* <NextSeo
-        config={{
-          title: 'Salón bugambilias, conócenos!',
-          description: `
-Paquetes todo incluido:
+    <UserAgent.Provider value={{ result: userAgent }}>
+      <NextSeo
+        title={'Salón bugambilias, conócenos!'}
+        description={`Paquetes todo incluido:
 - Fiesta infantil
 - XV años
 - Inflables
@@ -41,9 +41,8 @@ Paquetes todo incluido:
 - Taquizas (tacos al pastor)
 - Sala Lounge
 - Rocolas
-`,
-        }}
-      /> */}
+`}
+      />
       <Head>
         <title>Salón bugambilias - Acerca de</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -53,44 +52,48 @@ Paquetes todo incluido:
         <NavigationOffset />
         <PageWrapper>
           <section>
-            <h2>
+            <h2 className={styles.title}>
               Te ofrecemos nuestros servicios de paquetes
               <br />
               <small>Todo incluido para realizar tu evento.</small>
             </h2>
-            <div className={styles.styles}>
+            <div className={styles.services}>
               <Services />
             </div>
           </section>
           <section>
-            <h2>Instalaciones</h2>
-            <p>
+            <h2 className={styles.subtitle}>Instalaciones</h2>
+            <p className={styles['main-text']}>
               Nuestro salón de <b>854 metros cuadrados</b> tiene un cupo máximo para{' '}
               <b>200 personas.</b> Contamos con servicio de meseros profesionales y sistema para DJ.
             </p>
-            <Box mt={{ xs: 15, md: 30 }}>
+            <div className={styles.gallery__wrapper}>
               <ImageGallery images={premisesImages} height={height} nextDelay={2000} />
-            </Box>
+            </div>
           </section>
           <section>
-            <h2>Bodas</h2>
-            <p>
+            <h2 className={styles.subtitle}>Bodas</h2>
+            <p className={styles['main-text']}>
               Ten tu boda de ensueño y sin preocupaciones. Decoramos el salón con los colores de tu
               preferencia, así como arreglos florales y decorativos.
             </p>
-            <Box mt={{ xs: 15, md: 30 }}>
+            <div className={styles.gallery__wrapper}>
               <ImageGallery images={weddingImages} height={height} nextDelay={1000} />
-            </Box>
+            </div>
           </section>
         </PageWrapper>
       </Content>
       <Footer />
-    </Fragment>
+    </UserAgent.Provider>
   );
 };
 
-Servicios.propTypes = {
-  isMobileDevice: PropTypes.bool,
-};
+export default Servicios;
 
-export default withUserAgent(Servicios);
+type Props = { deviceType: string };
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const userAgentHeader = UAParser(ctx.req.headers['user-agent']);
+
+  return { props: { deviceType: userAgentHeader.device.type ?? 'unknown' } };
+};

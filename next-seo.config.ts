@@ -1,4 +1,4 @@
-export default {
+export const config = {
   openGraph: {
     type: 'website',
     locale: 'es_MX',
@@ -6,4 +6,4 @@ export default {
     canonical: 'https://bugambilias.party/',
     site_name: 'Salón Bugambilias',
   },
-};
+} as const;
