@@ -1,3 +1,17 @@
+.title {
+  @apply text-3xl text-primary my-3;
+}
+
+@screen md {
+  .title {
+    @apply my-6;
+  }
+}
+
+.text {
+  @apply text-lg my-2;
+}
+
 .content {
   @apply mb-3;
 }
@@ -9,6 +23,7 @@
 }
 
 .link {
+  @apply underline;
   color: inherit;
 }
 
