@@ -1,0 +1,36 @@
+.title {
+  @apply text-3xl text-primary my-3;
+}
+
+@screen md {
+  .title {
+    @apply my-6;
+  }
+}
+
+.text {
+  @apply text-lg my-2;
+}
+
+.content {
+  @apply mb-3;
+}
+
+@screen md {
+  .content {
+    @apply mb-5;
+  }
+}
+
+.link {
+  @apply underline;
+  color: inherit;
+}
+
+.link__wrapper {
+  @apply flex items-center;
+}
+
+.img {
+  @apply mr-5;
+}

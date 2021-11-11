@@ -1,11 +1,12 @@
 import React, { useReducer, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useTransition } from 'react-spring';
+import { animated, useTransition } from 'react-spring';
 import { withUserAgent } from '../UserAgent';
 import isInScreen from '../isInScreen';
 import { imageGalleryReducer, getDefaultState, nextImage, previousImage } from './reducer';
-import { Wrapper, BackwardWrapper, BackwardIcon, ForwardWrapper, ForwardIcon, Img } from './styled';
 import { event } from '../../utils';
+import styles from './styles.module.css';
+import { easeCubicInOut } from 'd3-ease';
 
 const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen }) => {
   const [state, dispatch] = useReducer(imageGalleryReducer, getDefaultState(images));
@@ -60,42 +61,86 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
     };
   }, [mouseStatus, isInScreen]);
 
-  const nextImageTransitions = useTransition(state.images[0], item => item.src, {
+  const nextImageTransitions = useTransition(state.images[0], {
     from: { opacity: 0, transform: 'translate3d(100%, 0, 0)' },
     enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
     leave: { opacity: 0, transform: 'translate3d(-50%, 0, 0)' },
+    config: {
+      duration: 500,
+      easing: easeCubicInOut,
+    },
   });
-  const previousImageTransitions = useTransition(state.images[0], item => item.src, {
+  const previousImageTransitions = useTransition(state.images[0], {
     from: { opacity: 0, transform: 'translate3d(-100%, 0, 0)' },
     enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
     leave: { opacity: 0, transform: 'translate3d(50%, 0, 0)' },
+    config: {
+      duration: 500,
+      easing: easeCubicInOut,
+    },
   });
 
   return (
-    <Wrapper
+    <div
+      className={styles.wrapper}
       data-testid="desktop-gallery-wrapper"
       height={height}
       onMouseEnter={() => setMouseStatus('entered')}
       onMouseLeave={() => setMouseStatus('left')}
     >
-      <BackwardWrapper onClick={onPrevious} title="Imagen anterior">
-        <BackwardIcon />
-      </BackwardWrapper>
-      <ForwardWrapper onClick={onForward} title="Siguiente imagen">
-        <ForwardIcon />
-      </ForwardWrapper>
-      {state.direction === 'none' && <Img {...state.images[0]} />}
+      <button
+        className={`${styles.button} ${styles['button--back']}`}
+        onClick={onPrevious}
+        title="Imagen anterior"
+      >
+        <div className={`${styles.icon} ${styles['icon--back']}`} />
+      </button>
+      <button
+        className={`${styles.button} ${styles['button--forward']}`}
+        onClick={onForward}
+        title="Siguiente imagen"
+      >
+        <div className={styles.icon} />
+      </button>
+      {state.direction === 'none' && <img className={styles.img} {...state.images[0]} />}
       {state.direction === 'next' &&
-        nextImageTransitions.map(({ item, key, props }) => (
-          <Img style={props} key={key} {...item} />
+        nextImageTransitions(({ opacity, transform }, item) => (
+          <animated.img
+            className={styles.img}
+            src={item.src}
+            alt={item.alt}
+            style={{
+              opacity: opacity.to({
+                range: [0.0, 1.0],
+                output: [0, 1],
+              }),
+              transform,
+            }}
+          />
         ))}
       {state.direction === 'previous' &&
-        previousImageTransitions.map(({ item, key, props }) => (
-          <Img style={props} key={key} {...item} />
+        previousImageTransitions(({ opacity, transform }, item) => (
+          <animated.img
+            className={styles.img}
+            src={item.src}
+            alt={item.alt}
+            style={{
+              opacity: opacity.to({
+                range: [0.0, 1.0],
+                output: [0, 1],
+              }),
+              transform,
+            }}
+          />
         ))}
       {/* Prefetches the next image */}
-      <Img invisible="true" {...state.images[1]} data-testid="prefetched" />
-    </Wrapper>
+      <img
+        className={styles.img}
+        style={{ visibility: 'hidden' }}
+        {...state.images[1]}
+        data-testid="prefetched"
+      />
+    </div>
   );
 };
 
@@ -104,7 +149,7 @@ ImageGallery.propTypes = {
     PropTypes.shape({
       src: PropTypes.string,
       alt: PropTypes.string,
-    })
+    }),
   ),
   height: PropTypes.string,
   isMobileDevice: PropTypes.bool,

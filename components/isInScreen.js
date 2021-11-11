@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const isInScreen = WrappedComponent => props => {
+const isInScreen = (WrappedComponent) => (props) => {
   const [isInScreen, setIsInScreen] = useState(false);
   const elementRef = useRef(null);
 

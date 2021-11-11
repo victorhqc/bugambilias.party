@@ -1,0 +1,35 @@
+.title {
+  @apply text-4xl text-primary mb-4;
+}
+
+.p {
+  @apply my-2;
+}
+
+.services {
+  @apply list-disc mx-6;
+}
+
+.highlight {
+  @apply text-2xl text-primary mb-4;
+}
+
+.img {
+  @apply bg-cover w-full h-full;
+}
+
+@screen md {
+  .content__wrapper {
+    @apply grid grid-cols-2 gap-4;
+  }
+}
+
+.content {
+  @apply my-4 pb-3 w-full h-80 relative;
+}
+
+@screen md {
+  .content {
+    @apply h-96 m-0;
+  }
+}

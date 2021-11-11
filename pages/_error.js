@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { Typography, styled } from '@smooth-ui/core-sc';
 import { NavigationHeader, Content, PageWrapper, NavigationOffset, Footer } from '../components';
 
 class Error extends Component {
@@ -37,7 +36,7 @@ class Error extends Component {
           <NavigationHeader />
           <NavigationOffset />
           <PageWrapper>
-            <ErrorWrapper>{this.renderError()}</ErrorWrapper>
+            <div className="text-center mt-24">{this.renderError()}</div>
           </PageWrapper>
         </Content>
         <Footer />
@@ -52,29 +51,16 @@ Error.propTypes = {
 
 const Error404 = () => (
   <Fragment>
-    <Typography variant="h1" color="primary">
-      404
-    </Typography>
-    <Typography variant="h4" color="primary">
-      Página no encontrada.
-    </Typography>
+    <h1>404</h1>
+    <h2>Página no encontrada.</h2>
   </Fragment>
 );
 
 const GenericError = () => (
   <Fragment>
-    <Typography variant="h1" color="primary">
-      Algo anda mal en el sitio.
-    </Typography>
-    <Typography variant="h4" color="primary">
-      Intenta cargar la página nuevamente.
-    </Typography>
+    <h1>Algo anda mal en el sitio.</h1>
+    <h2>Intenta cargar la página nuevamente.</h2>
   </Fragment>
 );
-
-const ErrorWrapper = styled.div`
-  text-align: center;
-  margin-top: 100px;
-`;
 
 export default Error;

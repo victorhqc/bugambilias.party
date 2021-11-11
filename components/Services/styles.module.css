@@ -1,0 +1,27 @@
+.wrapper {
+  @apply w-full p-3;
+}
+
+@screen md {
+  .wrapper {
+    @apply p-4;
+  }
+}
+
+.flex__wrapper {
+  @apply grid grid-cols-2 gap-2 text-center;
+}
+
+@screen md {
+  .flex__wrapper {
+    @apply grid-cols-4 gap-4;
+  }
+}
+
+.img {
+  @apply m-auto;
+}
+
+.text {
+  @apply my-3;
+}
