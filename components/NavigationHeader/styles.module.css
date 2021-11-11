@@ -66,3 +66,14 @@
 .logo {
   height: 50px;
 }
+
+.offset {
+  @apply w-full relative;
+  height: 65px;
+}
+
+@screen md {
+  .offset {
+    height: 0;
+  }
+}

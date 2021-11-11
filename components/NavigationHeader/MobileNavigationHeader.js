@@ -31,31 +31,36 @@ const MobileNavigationHeader = ({ router }) => {
   const [status, setStatus] = useState(CLOSED);
 
   return (
-    <header className={styles.header}>
-      <div className={styles.header__content}>
-        <a href="/">
-          <img className={styles.logo} alt="Salón bugambilias" src="logo.png" height="50" />
-        </a>
-        <ToggleButton setStatus={setStatus} />
-      </div>
-      {status === OPENED ? (
-        <nav className={styles.nav}>
-          {PAGES.map((page) => {
-            const isActive = router.route === page.href;
+    <>
+      <header className={styles.header}>
+        <div className={styles.header__content}>
+          <a href="/">
+            <img className={styles.logo} alt="Salón bugambilias" src="logo.png" height="50" />
+          </a>
+          <ToggleButton setStatus={setStatus} />
+        </div>
+        {status === OPENED ? (
+          <nav className={styles.nav}>
+            {PAGES.map((page) => {
+              const isActive = router.route === page.href;
 
-            return (
-              <Link href={page.href} passHref key={page.href}>
-                <a
-                  className={`${styles.nav__element} ${isActive && styles['nav__element--active']}`}
-                >
-                  {page.title}
-                </a>
-              </Link>
-            );
-          })}
-        </nav>
-      ) : null}
-    </header>
+              return (
+                <Link href={page.href} passHref key={page.href}>
+                  <a
+                    className={`${styles.nav__element} ${
+                      isActive && styles['nav__element--active']
+                    }`}
+                  >
+                    {page.title}
+                  </a>
+                </Link>
+              );
+            })}
+          </nav>
+        ) : null}
+      </header>
+      <div className={styles.offset} />
+    </>
   );
 };
 
