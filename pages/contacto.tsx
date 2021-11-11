@@ -10,7 +10,6 @@ import {
   PageWrapper,
   NavigationOffset,
   GoogleMaps,
-  withUserAgent,
   UserAgent,
 } from '../components';
 import { event, UserAgentSingleton } from '../utils';

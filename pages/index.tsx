@@ -108,18 +108,18 @@ const Index: NextPage<Props> = ({ deviceType }) => {
                 <Image
                   className={styles.img}
                   src={PREMISES_PICTURE}
-                  // style={{ backgroundImage: PREMISES_PICTURE }}
                   alt={PREMISES_ALT}
                   layout="fill"
+                  objectFit="cover"
                 />
               </div>
               <div className={styles.content}>
                 <Image
                   className={styles.img}
                   src={WEDDING_INDEX_PICTURE}
-                  // style={{ backgroundImage: WEDDING_INDEX_PICTURE }}
                   alt={WEDDING_INDEX_PICTURE_ALT}
                   layout="fill"
+                  objectFit="cover"
                 />
               </div>
             </div>
