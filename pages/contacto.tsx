@@ -13,6 +13,7 @@ import {
   UserAgent,
 } from '../components';
 import { event, UserAgentSingleton } from '../utils';
+import { EMAIL } from '@utils/constants';
 import styles from './contacto.module.css';
 
 const Contacto: NextPage<Props> = ({ deviceType }) => {
@@ -39,7 +40,7 @@ const Contacto: NextPage<Props> = ({ deviceType }) => {
         title="Salón bugambilias, contáctanos"
         description={`
 Llámanos de lunes a viernes por teléfono o whatsapp al 442 313 8637 o por correo electrónico
-israel_bugam@hotmail.com.
+${EMAIL}
 
 Estamos ubicados en Senda de los recuerdos 119, Milenio III, Querétaro, Qro 776060
 `}
@@ -80,10 +81,10 @@ Estamos ubicados en Senda de los recuerdos 119, Milenio III, Querétaro, Qro 776
               />
               <a
                 className={styles.link}
-                href="mailto:israel_bugam@hotmail.com?subject=Pregunta sobre Salón Bugambilias"
+                href={`mailto:${EMAIL}?subject=Pregunta sobre Salón Bugambilias`}
                 onClick={onEmail}
               >
-                israel_bugam@hotmail.com
+                {EMAIL}
               </a>
             </div>
           </div>

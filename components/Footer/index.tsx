@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { EMAIL } from '@utils/constants';
 import styles from './styles.module.css';
 
 const FooterComponent = () => {
@@ -17,9 +18,9 @@ const FooterComponent = () => {
         <b>Correo electrónico: </b>
         <a
           className={styles.footer__link}
-          href="mailto:israel_bugam@hotmail.com?subject=Pregunta sobre Salón Bugambilias"
+          href={`mailto:${EMAIL}?subject=Pregunta sobre Salón Bugambilias`}
         >
-          israel_bugam@hotmail.com
+          {EMAIL}
         </a>
       </p>
     </div>
