@@ -1,15 +1,31 @@
-import React, { useReducer, useState, useEffect, useCallback } from 'react';
+import React, {
+  useReducer,
+  useState,
+  useEffect,
+  useCallback,
+  FC,
+  HTMLAttributes, CSSProperties,
+} from 'react';
 import PropTypes from 'prop-types';
 import { animated, useTransition } from 'react-spring';
 import { withUserAgent } from '../UserAgent';
 import isInScreen from '../isInScreen';
-import { imageGalleryReducer, getDefaultState, nextImage, previousImage } from './reducer';
+import { imageGalleryReducer, getDefaultState, nextImage, previousImage, VisualElement } from './reducer';
 import { event } from '../../utils';
 import styles from './styles.module.css';
 import { easeCubicInOut } from 'd3-ease';
+import { isAnimated } from '@react-spring/animated';
 
-const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen }) => {
-  const [state, dispatch] = useReducer(imageGalleryReducer, getDefaultState(images));
+type Props = {
+  height: number;
+  elements: VisualElement[];
+  isMobileDevice?: boolean;
+  isInScreen?: boolean;
+  nextDelay?: number;
+};
+
+const ImageGallery: FC<Props> = ({ elements, height, isMobileDevice, nextDelay, isInScreen }) => {
+  const [state, dispatch] = useReducer(imageGalleryReducer, getDefaultState(elements));
   const [mouseStatus, setMouseStatus] = useState('none');
   const onForward = useCallback(() => {
     dispatch(nextImage());
@@ -45,7 +61,7 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
       clearInterval(automaticNextImage);
     };
 
-    // Small hack just to reenable the automatic next image.
+    // Small hack just to re-enable the automatic next image.
     const onFocus = () => {
       setMouseStatus(`Focus-${Math.random()}`);
     };
@@ -61,7 +77,7 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
     };
   }, [mouseStatus, isInScreen]);
 
-  const nextImageTransitions = useTransition(state.images[0], {
+  const nextImageTransitions = useTransition(state.elements[0], {
     from: { opacity: 0, transform: 'translate3d(100%, 0, 0)' },
     enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
     leave: { opacity: 0, transform: 'translate3d(-50%, 0, 0)' },
@@ -70,7 +86,7 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
       easing: easeCubicInOut,
     },
   });
-  const previousImageTransitions = useTransition(state.images[0], {
+  const previousImageTransitions = useTransition(state.elements[0], {
     from: { opacity: 0, transform: 'translate3d(-100%, 0, 0)' },
     enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
     leave: { opacity: 0, transform: 'translate3d(50%, 0, 0)' },
@@ -84,7 +100,6 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
     <div
       className={styles.wrapper}
       data-testid="desktop-gallery-wrapper"
-      height={height}
       onMouseEnter={() => setMouseStatus('entered')}
       onMouseLeave={() => setMouseStatus('left')}
     >
@@ -102,13 +117,13 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
       >
         <div className={styles.icon} />
       </button>
-      {state.direction === 'none' && <img className={styles.img} {...state.images[0]} />}
+      {state.direction === 'none' && <VisualElement className={styles.img} element={state.elements[0]} />}
       {state.direction === 'next' &&
         nextImageTransitions(({ opacity, transform }, item) => (
-          <animated.img
+          <VisualElement
+            element={item}
+            isAnimated={true}
             className={styles.img}
-            src={item.src}
-            alt={item.alt}
             style={{
               opacity: opacity.to({
                 range: [0.0, 1.0],
@@ -120,10 +135,10 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
         ))}
       {state.direction === 'previous' &&
         previousImageTransitions(({ opacity, transform }, item) => (
-          <animated.img
+          <VisualElement
+            element={item}
+            isAnimated={true}
             className={styles.img}
-            src={item.src}
-            alt={item.alt}
             style={{
               opacity: opacity.to({
                 range: [0.0, 1.0],
@@ -134,27 +149,40 @@ const ImageGallery = ({ images, height, isMobileDevice, nextDelay, isInScreen })
           />
         ))}
       {/* Prefetches the next image */}
-      <img
+      <VisualElement
         className={styles.img}
+        element={state.elements[1]}
         style={{ visibility: 'hidden' }}
-        {...state.images[1]}
         data-testid="prefetched"
       />
     </div>
   );
 };
 
-ImageGallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string,
-      alt: PropTypes.string,
-    }),
-  ),
-  height: PropTypes.string,
-  isMobileDevice: PropTypes.bool,
-  isInScreen: PropTypes.bool,
-  nextDelay: PropTypes.number,
-};
+const VisualElement: FC<{
+  element: VisualElement;
+  isAnimated?: boolean;
+  style?: any;
+} & Omit<HTMLAttributes<HTMLImageElement | HTMLVideoElement>, 'style'>>
+  = ({
+       element,
+       isAnimated = false,
+       ...props
+  }) => {
+  switch (element.type) {
+    case 'image':
+      return isAnimated ? <animated.img
+        src={element.src}
+        alt={element.alt}
+        {...props} /> :
+        <img
+          src={element.src}
+          alt={element.alt}
+          {...props} />;
+    case 'video':
+      return isAnimated ? <animated.video controls {...props}><source src={element.src} type="video/mp4" /></animated.video> :
+        <video controls {...props}><source src={element.src} type="video/mp4" /></video>
+  }
+}
 
 export default withUserAgent(isInScreen(ImageGallery));

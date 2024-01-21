@@ -68,7 +68,7 @@ const Servicios: NextPage<Props> = ({ deviceType }) => {
               <b>200 personas.</b> Contamos con servicio de meseros profesionales y sistema para DJ.
             </p>
             <div className={styles.gallery__wrapper}>
-              <ImageGallery images={premisesImages} height={height} nextDelay={2000} />
+              <ImageGallery elements={premisesImages} height={height} nextDelay={2000} />
             </div>
           </section>
           <section>
@@ -78,7 +78,7 @@ const Servicios: NextPage<Props> = ({ deviceType }) => {
               preferencia, así como arreglos florales y decorativos.
             </p>
             <div className={styles.gallery__wrapper}>
-              <ImageGallery images={weddingImages} height={height} nextDelay={1000} />
+              <ImageGallery elements={weddingImages} height={height} nextDelay={1000} />
             </div>
           </section>
         </PageWrapper>
