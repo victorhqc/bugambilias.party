@@ -18,14 +18,18 @@
   @apply bg-cover w-full h-full;
 }
 
+.video {
+  @apply bg-cover w-full h-full;
+}
+
 @screen md {
   .content__wrapper {
-    @apply grid grid-cols-2 gap-4;
+    @apply my-10 grid grid-cols-1 gap-4;
   }
 }
 
 .content {
-  @apply my-4 pb-3 w-full h-80 relative;
+  @apply my-4 w-full h-80 relative;
 }
 
 @screen md {

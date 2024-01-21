@@ -9,6 +9,7 @@ import { NextSeo, LocalBusinessJsonLd } from 'next-seo';
 import { Content, Footer, NavigationHeader, ImageFade, PageWrapper } from '../components';
 import styles from './index.module.css';
 
+const INITIAL_VIDEO = '/mobile/video_inicio.mp4';
 const PREMISES_PICTURE = '/premises/mobile/premises_3.jpg';
 const WEDDING_INDEX_PICTURE = '/wedding/mobile/wedding_1.jpg';
 const WEDDING_PICTURE = '/wedding/mobile/wedding_4.jpg';
@@ -105,22 +106,9 @@ const Index: NextPage<Props> = ({ deviceType }) => {
             </h4>
             <div className={styles.content__wrapper}>
               <div className={styles.content}>
-                <Image
-                  className={styles.img}
-                  src={PREMISES_PICTURE}
-                  alt={PREMISES_ALT}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-              <div className={styles.content}>
-                <Image
-                  className={styles.img}
-                  src={WEDDING_INDEX_PICTURE}
-                  alt={WEDDING_INDEX_PICTURE_ALT}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                <video controls autoPlay={true} className={styles.video}>
+                  <source src={INITIAL_VIDEO} />
+                </video>
               </div>
             </div>
           </section>
