@@ -8,7 +8,7 @@ const KNOWN_GALLERIES = {
   //   picturesLength: 15,
   // },
   wedding: ['wedding_1.jpg', 'wedding_2.jpg', 'wedding_3.jpg', 'wedding_4.jpg', 'wedding_5.jpg', 'wedding_6.jpg', 'wedding_7.jpg', 'wedding_8.jpg', 'wedding_9.jpg', 'wedding_10.jpg', 'wedding_11.jpg', 'wedding_12.jpg', 'wedding_13.jpg'],
-  premises: ['premises_0.mp4', 'premises_1.jpg', 'premises_2.jpg', 'premises_3.jpg', 'premises_4.jpg', 'premises_5.jpg'],
+  premises: ['premises_0.mp4', 'premises_1.mp4', 'premises_2.jpg', 'premises_3.jpg', 'premises_4.jpg', 'premises_5.jpg', 'premises_6.jpg'],
 } as const;
 
 export type Gallery = keyof typeof KNOWN_GALLERIES;

@@ -9,7 +9,7 @@ import { NextSeo, LocalBusinessJsonLd } from 'next-seo';
 import { Content, Footer, NavigationHeader, ImageFade, PageWrapper } from '../components';
 import styles from './index.module.css';
 
-const PREMISES_PICTURE = '/premises/mobile/premises_1.jpg';
+const PREMISES_PICTURE = '/premises/mobile/premises_3.jpg';
 const WEDDING_INDEX_PICTURE = '/wedding/mobile/wedding_1.jpg';
 const WEDDING_PICTURE = '/wedding/mobile/wedding_4.jpg';
 const PREMISES_ALT = 'Mesas arregladas con mantelería y platos, listas para comenzar la fiesta.';
