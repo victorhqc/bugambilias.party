@@ -4,8 +4,9 @@
 }
 
 .button {
-  @apply absolute w-1/6 h-full top-0 z-10 cursor-pointer border-none bg-transparent flex justify-center items-center p-0;
+  @apply absolute w-1/6 top-0 z-10 cursor-pointer border-none bg-transparent flex justify-center items-center p-0;
   min-width: 50px;
+  height: calc(100% - 40px);
 }
 
 .button--back {
