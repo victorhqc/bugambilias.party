@@ -29,6 +29,12 @@
   }
 }
 
+@screen sm {
+  .content__wrapper {
+    @apply grid grid-cols-1 gap-4;
+  }
+}
+
 .content {
   @apply my-4 w-full h-80 relative;
 }
