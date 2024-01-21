@@ -19,7 +19,8 @@
 }
 
 .video {
-  @apply bg-cover w-full h-full;
+  @apply bg-cover w-full h-full m-auto;
+  max-width: 640px;
 }
 
 @screen md {
